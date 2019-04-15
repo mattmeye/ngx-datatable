@@ -456,7 +456,17 @@ var DatatableComponent = /** @class */ (function () {
          * CSS class added to root element if mulit click select
          */
         get: function () {
-            return this.selectionType === types_1.SelectionType.multiClick;
+            return this.selectionType === types_1.SelectionType.single;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatatableComponent.prototype, "isSelector", {
+        /**
+       * CSS class applied to root if single select.
+       */
+        get: function () {
+            return this.selectionType === types_1.SelectionType.single;
         },
         enumerable: true,
         configurable: true
@@ -1180,6 +1190,11 @@ var DatatableComponent = /** @class */ (function () {
         __metadata("design:type", Boolean),
         __metadata("design:paramtypes", [])
     ], DatatableComponent.prototype, "isMultiClickSelection", null);
+    __decorate([
+        core_1.HostBinding('class.selector'),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [])
+    ], DatatableComponent.prototype, "isSelector", null);
     __decorate([
         core_1.ContentChildren(columns_1.DataTableColumnDirective),
         __metadata("design:type", core_1.QueryList),

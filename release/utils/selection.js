@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function selectRows(selected, row, comparefn) {
+function selectRow(selected, row, comparefn) {
     var selectedIndex = comparefn(row, selected);
     if (selectedIndex > -1) {
         selected.splice(selectedIndex, 1);
@@ -10,7 +10,29 @@ function selectRows(selected, row, comparefn) {
     }
     return selected;
 }
+exports.selectRow = selectRow;
+function selectRows(selected, rows, comparefn) {
+    for (var _i = 0, rows_1 = rows; _i < rows_1.length; _i++) {
+        var row = rows_1[_i];
+        var selectedIndex = comparefn(row, selected);
+        if (selectedIndex <= -1) {
+            selected.push(row);
+        }
+    }
+    return selected;
+}
 exports.selectRows = selectRows;
+function deselectRows(selected, rows, comparefn) {
+    for (var _i = 0, rows_2 = rows; _i < rows_2.length; _i++) {
+        var row = rows_2[_i];
+        var selectedIndex = comparefn(row, selected);
+        if (selectedIndex > -1) {
+            selected.splice(selectedIndex, 1);
+        }
+    }
+    return selected;
+}
+exports.deselectRows = deselectRows;
 function selectRowsBetween(selected, rows, index, prevIndex, comparefn) {
     var reverse = index < prevIndex;
     for (var i = 0; i < rows.length; i++) {

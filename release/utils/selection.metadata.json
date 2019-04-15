@@ -1,1 +1,1 @@
-[{"__symbolic":"module","version":4,"metadata":{"selectRows":{"__symbolic":"function"},"selectRowsBetween":{"__symbolic":"function"}}}]
+[{"__symbolic":"module","version":4,"metadata":{"selectRow":{"__symbolic":"function"},"selectRows":{"__symbolic":"function"},"deselectRows":{"__symbolic":"function"},"selectRowsBetween":{"__symbolic":"function"}}}]

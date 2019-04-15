@@ -332,6 +332,10 @@ export declare class DatatableComponent implements OnInit, DoCheck, AfterViewIni
      */
     readonly isMultiClickSelection: boolean;
     /**
+   * CSS class applied to root if single select.
+   */
+    readonly isSelector: boolean;
+    /**
      * Column templates gathered from `ContentChildren`
      * if described in your markup.
      */

@@ -26,18 +26,18 @@ var DataTableSelectionComponent = /** @class */ (function () {
         var multiClick = this.selectionType === types_1.SelectionType.multiClick;
         var selected = [];
         if (multi || chkbox || multiClick) {
-            if (event.shiftKey) {
+            if (event && event.shiftKey) {
                 selected = utils_1.selectRowsBetween([], this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
             }
-            else if (event.ctrlKey || event.metaKey || multiClick || chkbox) {
-                selected = utils_1.selectRows(this.selected.slice(), row, this.getRowSelectedIdx.bind(this));
+            else if (event && (event.ctrlKey || event.metaKey) || multiClick || chkbox) {
+                selected = utils_1.selectRow(this.selected.slice(), row, this.getRowSelectedIdx.bind(this));
             }
             else {
-                selected = utils_1.selectRows([], row, this.getRowSelectedIdx.bind(this));
+                selected = utils_1.selectRow([], row, this.getRowSelectedIdx.bind(this));
             }
         }
         else {
-            selected = utils_1.selectRows([], row, this.getRowSelectedIdx.bind(this));
+            selected = utils_1.selectRow([], row, this.getRowSelectedIdx.bind(this));
         }
         if (typeof this.selectCheck === 'function') {
             selected = selected.filter(this.selectCheck.bind(this));
@@ -45,6 +45,28 @@ var DataTableSelectionComponent = /** @class */ (function () {
         this.selected.splice(0, this.selected.length);
         (_a = this.selected).push.apply(_a, selected);
         this.prevIndex = index;
+        this.select.emit({
+            selected: selected
+        });
+    };
+    DataTableSelectionComponent.prototype.selectRows = function (rows, clearSelection) {
+        if (clearSelection === void 0) { clearSelection = true; }
+        var selected = clearSelection ? [] : this.selected;
+        selected = utils_1.selectRows(selected, rows, this.getRowSelectedIdx.bind(this));
+        if (typeof this.selectCheck === 'function') {
+            selected = selected.filter(this.selectCheck.bind(this));
+        }
+        this.selected = selected;
+        this.select.emit({
+            selected: selected
+        });
+    };
+    DataTableSelectionComponent.prototype.deselectRows = function (rows) {
+        var selected = utils_1.deselectRows(this.selected, rows, this.getRowSelectedIdx.bind(this));
+        if (typeof this.selectCheck === 'function') {
+            selected = selected.filter(this.selectCheck.bind(this));
+        }
+        this.selected = selected;
         this.select.emit({
             selected: selected
         });
