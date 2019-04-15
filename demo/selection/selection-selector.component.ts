@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { DataTableSelectionComponent, DatatableComponent } from '../../src';
+import { DatatableComponent } from '../../src';
 
 @Component({
   selector: 'selector-demo',
@@ -28,7 +28,7 @@ import { DataTableSelectionComponent, DatatableComponent } from '../../src';
           [rowHeight]="'auto'"
           [limit]="5"
           [selected]="selected"
-          [selectionType]="'single'"
+          [selectionType]="'multi'"
           (activate)="onActivate($event)"
           (select)='onSelect($event)'>
         </ngx-datatable>
@@ -44,6 +44,8 @@ import { DataTableSelectionComponent, DatatableComponent } from '../../src';
         </ul>
         <button (click)="selectFirst()">Select First</button>
         <button (click)="selectSecond()">Select Second</button>
+        <button (click)="selectBoth()">Select Both</button>
+        <button (click)="selectBoth(true)">Select Both (clear all)</button>
       </div>
     </div>
   `
@@ -69,12 +71,17 @@ export class SelectorComponent {
 
   selectFirst() {
     const bodyComponent = this.table.bodyComponent;
-    bodyComponent.selector.selectRow(null, null, bodyComponent.rows[0]);
+    bodyComponent.selector.selectRow(null, 0, this.rows[0]);
   }
 
   selectSecond() {
     const bodyComponent = this.table.bodyComponent;
-    bodyComponent.selector.selectRow(null, null, bodyComponent.rows[1]);
+    bodyComponent.selector.selectRow(null, 1, this.rows[1]);
+  }
+
+  selectBoth(clear: boolean = false) {
+    const bodyComponent = this.table.bodyComponent;
+    bodyComponent.selector.selectRows([this.rows[0], this.rows[1]], clear);
   }
 
   fetch(cb) {

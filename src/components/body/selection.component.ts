@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Keys, selectRows, selectRowsBetween } from '../../utils';
+import { Keys, selectRows as deepSelectRows, deselectRows as deepDeselectRows, selectRow as deepSelectRow, selectRowsBetween } from '../../utils';
 import { SelectionType } from '../../types';
 import { MouseEvent, KeyboardEvent } from '../../events';
 
 export interface Model {
-  type: string; 
+  type: string;
   event: MouseEvent | KeyboardEvent;
   row: any;
   rowElement: any;
@@ -42,20 +42,20 @@ export class DataTableSelectionComponent {
     let selected: any[] = [];
 
     if (multi || chkbox || multiClick) {
-      if (event.shiftKey) {
+      if (event && event.shiftKey) {
         selected = selectRowsBetween(
           [],
           this.rows,
           index,
           this.prevIndex,
           this.getRowSelectedIdx.bind(this));
-      } else if (event.ctrlKey || event.metaKey || multiClick || chkbox) {
-        selected = selectRows([...this.selected], row, this.getRowSelectedIdx.bind(this));
+      } else if (event && (event.ctrlKey || event.metaKey) || multiClick || chkbox) {
+        selected = deepSelectRow([...this.selected], row, this.getRowSelectedIdx.bind(this));
       } else {
-        selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
+        selected = deepSelectRow([], row, this.getRowSelectedIdx.bind(this));
       }
     } else {
-      selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
+      selected = deepSelectRow([], row, this.getRowSelectedIdx.bind(this));
     }
 
     if (typeof this.selectCheck === 'function') {
@@ -67,6 +67,32 @@ export class DataTableSelectionComponent {
 
     this.prevIndex = index;
 
+    this.select.emit({
+      selected
+    });
+  }
+
+  selectRows(rows: any[], clearSelection: boolean = true): void {
+
+    let selected = clearSelection ? [] : this.selected;
+    selected = deepSelectRows(selected, rows, this.getRowSelectedIdx.bind(this));
+
+    if (typeof this.selectCheck === 'function') {
+      selected = selected.filter(this.selectCheck.bind(this));
+    }
+    this.selected = selected;
+    this.select.emit({
+      selected
+    });
+  }
+
+  deselectRows(rows: any[]): void {
+    let selected = deepDeselectRows(this.selected, rows, this.getRowSelectedIdx.bind(this));
+
+    if (typeof this.selectCheck === 'function') {
+      selected = selected.filter(this.selectCheck.bind(this));
+    }
+    this.selected = selected;
     this.select.emit({
       selected
     });
