@@ -140,7 +140,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       this._internalRows,
       optionalGetterForProp(this.treeFromRelation),
       optionalGetterForProp(this.treeToRelation)
-  );
+    );
 
     // recalculate sizes/etc
     this.recalculate();
@@ -617,7 +617,15 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
    */
   @HostBinding('class.multi-click-selection')
   get isMultiClickSelection(): boolean {
-    return this.selectionType === SelectionType.multiClick;
+    return this.selectionType === SelectionType.single;
+  }
+
+  /**
+ * CSS class applied to root if single select.
+ */
+  @HostBinding('class.selector')
+  get isSelector(): boolean {
+    return this.selectionType === SelectionType.single;
   }
 
   /**
@@ -769,7 +777,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
   ngAfterContentInit() {
     this.columnTemplates.changes.subscribe(v =>
       this.translateColumns(v));
-      
+
     this.listenForColumnInputChanges();
   }
 
@@ -811,7 +819,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     });
 
     const addGroup = (key: any, value: any) => {
-      return {key, value};
+      return { key, value };
     };
 
     // convert map back to a simple array of objects
@@ -926,7 +934,7 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // Avoid pagination caming from body events like scroll when the table 
     // has no virtualization and the external paging is enable. 
     // This means, let's the developer handle pagination by my him(her) self
-    if(this.externalPaging && !this.virtualization) {
+    if (this.externalPaging && !this.virtualization) {
       return;
     }
 
@@ -1184,13 +1192,13 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
     // TODO: For duplicated items this will not work
     const rowIndex = this._rows.findIndex(r =>
       r[this.treeToRelation] === event.row[this.treeToRelation]);
-    this.treeAction.emit({row, rowIndex});
+    this.treeAction.emit({ row, rowIndex });
   }
-    
+
   ngOnDestroy() {
     this._subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-  
+
   /**
    * listen for changes to input bindings of all DataTableColumnDirective and
    * trigger the columnTemplates.changes observable to emit

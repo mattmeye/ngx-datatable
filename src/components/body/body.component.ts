@@ -6,6 +6,7 @@ import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '..
 import { SelectionType } from '../../types';
 import { ScrollerComponent } from './scroller.component';
 import { MouseEvent } from '../../events';
+import { DataTableSelectionComponent } from './selection.component';
 
 @Component({
   selector: 'datatable-body',
@@ -216,6 +217,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
   @Output() treeAction: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(ScrollerComponent) scroller: ScrollerComponent;
+  @ViewChild(DataTableSelectionComponent) selector: DataTableSelectionComponent;
 
   /**
    * Returns if selection is enabled.
@@ -260,7 +262,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
    */
   constructor(private cd: ChangeDetectorRef) {
     // declare fn here so we can get access to the `this` property
-    this.rowTrackingFn = function(this: any, index: number, row: any): any {
+    this.rowTrackingFn = function (this: any, index: number, row: any): any {
       const idx = this.getRowIndex(row);
       if (this.trackByProp) {
         return `${idx}-${this.trackByProp}`;
@@ -386,7 +388,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
     // if grouprowsby has been specified treat row paging
     // parameters as group paging parameters ie if limit 10 has been
     // specified treat it as 10 groups rather than 10 rows
-    if(this.groupedRows) {
+    if (this.groupedRows) {
       let maxRowsPerGroup = 3;
       // if there is only one group set the maximum number of
       // rows per group the same as the total number of rows
@@ -710,9 +712,9 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       width: `${widths[group]}px`
     };
 
-    if(group === 'left') {
+    if (group === 'left') {
       translateXY(styles, offsetX, 0);
-    } else if(group === 'right') {
+    } else if (group === 'right') {
       const bodyWidth = parseInt(this.innerWidth + '', 0);
       const totalDiff = widths.total - bodyWidth;
       const offsetDiff = totalDiff - offsetX;

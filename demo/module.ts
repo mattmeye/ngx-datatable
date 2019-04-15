@@ -57,6 +57,7 @@ import { MultiDisableSelectionComponent } from './selection/selection-disabled.c
 import { CheckboxSelectionComponent } from './selection/selection-chkbox.component';
 import { MultiClickSelectionComponent } from './selection/selection-multi-click.component';
 import { CustomCheckboxSelectionComponent } from './selection/selection-chkbox-template.component';
+import { SelectorComponent } from './selection/selection-selector.component';
 
 // -- Columns
 import { ColumnToggleComponent } from './columns/column-toggle.component';
@@ -71,6 +72,7 @@ import { SummaryRowSimpleComponent } from './summary/summary-row-simple.componen
 import { SummaryRowCustomTemplateComponent } from './summary/summary-row-custom-template.component';
 import { SummaryRowServerPagingComponent } from './summary/summary-row-server-paging.component';
 import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html.component';
+
 
 @NgModule({
   declarations: [
@@ -108,6 +110,7 @@ import { SummaryRowInlineHtmlComponent } from './summary/summary-row-inline-html
     DarkThemeComponent,
     TabsDemoComponent,
     SingleSelectionComponent,
+    SelectorComponent,
     LiveDataComponent,
     MultiDisableSelectionComponent,
     RxDemoComponent,

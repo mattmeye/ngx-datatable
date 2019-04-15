@@ -102,6 +102,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
               <li><a href="#multidisable-selection" (click)="state='multidisable-selection'">Disable Callback</a></li>
               <li><a href="#chkbox-selection" (click)="state='chkbox-selection'">Checkbox</a></li>
               <li><a href="#chkbox-selection-template" (click)="state='chkbox-selection-template'">Custom Checkbox</a></li>
+              <li><a href="#selector" (click)="state='selector'">Selector</a></li>
             </ul>
           </li>
           <li>
@@ -183,6 +184,7 @@ import { Location, LocationStrategy, HashLocationStrategy } from '@angular/commo
         <chkbox-selection-demo *ngIf="state === 'chkbox-selection'"></chkbox-selection-demo>
         <chkbox-selection-template-demo *ngIf="state === 'chkbox-selection-template'"></chkbox-selection-template-demo>
         <multi-click-selection-demo *ngIf="state === 'multi-click-selection'"></multi-click-selection-demo>
+        <selector-demo *ngIf="state === 'selector'"></selector-demo>
 
         <!-- Templates -->
         <template-ref-demo *ngIf="state === 'templateref'"></template-ref-demo>
